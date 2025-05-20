@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="portfolioApp">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vidushi Bhadauria - Portfolio</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+    }
+
+    :root {
+      --primary-color: #5c9ead;
+      --secondary-color: #89c0d0;
+      --accent-color: #a5dee5;
+      --light-color: #def3f6;
+      --dark-color: #2c5d70;
+      --text-color: #34495e;
+      --bg-color: #f0f9fc;
+    }
+
+    body {
+      font-family: 'Poppins', 'Arial', sans-serif;
+      line-height: 1.6;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    header {
+      text-align: center;
+      padding: 40px 0;
+      background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+      box-shadow: 0 4px 15px rgba(92, 158, 173, 0.2);
+      margin-bottom: 30px;
+      border-radius: 15px;
+      color: white;
+    }
+
+    header h1 {
+      margin-bottom: 20px;
+      font-size: 2.5em;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+    }
+
+    header img {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 5px solid white;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    section {
+      background-color: white;
+      margin-bottom: 30px;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      position: relative;
+      overflow: hidden;
+    }
+
+    section:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 5px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--primary-color), var(--accent-color));
+    }
+
+    section h2 {
+      color: var(--primary-color);
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+      font-size: 1.8em;
+      border-bottom: 2px solid var(--light-color);
+      display: inline-block;
+    }
+
+    .project, .experience {
+      margin-bottom: 30px;
+      padding: 20px;
+      background-color: var(--light-color);
+      border-radius: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project h3, .experience h3 {
+      color: var(--dark-color);
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .project-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .project {
+      flex: 1 1 calc(50% - 20px);
+      min-width: 300px;
+    }
+
+    .project-img-container {
+      height: 220px;
+      overflow: hidden;
+      border-radius: 8px;
+      margin: 15px 0;
+      width: 100%;
+    }
+
+    .project img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      transition: transform 0.5s ease;
+      background-color: #f9f9f9;
+      padding: 5px;
+    }
+
+    .project:hover img {
+      transform: scale(1.05);
+    }
+
+    .project-links {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .project-links a {
+      display: inline-block;
+      background-color: var(--primary-color);
+      color: white;
+      padding: 8px 15px;
+      text-decoration: none;
+      border-radius: 4px;
+      font-size: 0.9em;
+      transition: all 0.3s ease;
+    }
+
+    .project-links a:hover {
+      background-color: var(--dark-color);
+      transform: translateY(-3px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .skills-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .skill-category {
+      background-color: var(--light-color);
+      padding: 15px;
+      border-radius: 10px;
+    }
+
+    .skill-category h3 {
+      color: var(--dark-color);
+      margin-bottom: 10px;
+      font-size: 1.2em;
+    }
+
+    .skill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .skill-item {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.9em;
+      display: inline-block;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+
+    .skill-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+
+    #contact {
+      background: linear-gradient(135deg, var(--light-color), white);
+    }
+
+    .contact-info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .contact-item {
+      flex: 1;
+      min-width: 200px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .contact-icon {
+      background-color: var(--primary-color);
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2em;
+    }
+
+    .contact-item a {
+      color: var(--dark-color);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .contact-item a:hover {
+      color: var(--primary-color);
+    }
+
+    #additional {
+      background: linear-gradient(135deg, white, var(--light-color));
+    }
+
+    .edu-item {
+      margin-bottom: 15px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid var(--light-color);
+    }
+
+    .edu-item:last-child {
+      border-bottom: none;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 10px;
+      }
+
+      header img {
+        width: 150px;
+        height: 150px;
+      }
+
+      section {
+        padding: 20px;
+      }
+
+      .project {
+        flex: 1 1 100%;
+      }
+
+      .skills-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Animations */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeIn 0.5s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-element {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .animate-element.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Dark mode toggle */
+    .theme-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: var(--primary-color);
+      color: white;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.5em;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      z-index: 100;
+      transition: all 0.3s ease;
+    }
+
+    .theme-toggle:hover {
+      transform: rotate(180deg);
+    }
+
+    .dark-mode {
+      --bg-color: #162a36;
+      --text-color: #e0e0e0;
+      --light-color: #1e3a49;
+      --dark-color: #a5dee5;
+      --primary-color: #5c9ead;
+      --secondary-color: #3d6673;
+    }
+
+    .dark-mode section {
+      background-color: #1e3a49;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    .particles-js {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+  </style>
+</head>
+<body ng-controller="MainController">
+  <div id="particles-js" class="particles-js"></div>
+  
+  <div class="theme-toggle" ng-click="toggleTheme()">
+    <i class="fas" ng-class="{'fa-sun': isDarkMode, 'fa-moon': !isDarkMode}"></i>
+  </div>
+
+  <header class="animate-element">
+    <h1>{{ tagline }}</h1>
+    <img ng-src="{{ photo }}" alt="Vidushi Bhadauria" />
+    <p class="animate-element">{{ subtitle }}</p>
+  </header>
+
+  <section id="education" class="animate-element">
+    <h2>Education</h2>
+    <div class="edu-item">
+      <p><strong>BCA, Christ Deemed to be University (2024–2028)</strong> – GPA: 3.91 (Till Sem 1)</p>
+      <p ng-if="eduDetails.christ">{{ eduDetails.christ }}</p>
+    </div>
+    <div class="edu-item">
+      <p><strong>12th (Commerce with IP), India International School, Jaipur</strong> – 93.8%</p>
+      <p ng-if="eduDetails.twelth">{{ eduDetails.twelth }}</p>
+    </div>
+    <div class="edu-item">
+      <p><strong>10th, India International School, Jaipur</strong> – 86%</p>
+      <p ng-if="eduDetails.tenth">{{ eduDetails.tenth }}</p>
+    </div>
+  </section>
+
+  <section id="projects" class="animate-element">
+    <h2>Personal Projects</h2>
+    <div class="project-container">
+      <div class="project animate-element" ng-repeat="project in projects">
+        <h3>{{ project.title }}</h3>
+        <p>{{ project.description }}</p>
+        <p><strong>Technologies:</strong> {{ project.technologies }}</p>
+        <div class="project-img-container">
+          <img ng-src="{{ project.screenshot }}" alt="{{ project.title }} Screenshot" />
+        </div>
+        <div class="project-links">
+          <a ng-href="{{ project.github }}" target="_blank">
+            <i class="fab fa-github"></i> GitHub
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills" class="animate-element">
+    <h2>Technical Skills</h2>
+    <div class="skills-container">
+      <div class="skill-category" ng-repeat="category in skillCategories">
+        <h3>{{ category.name }}</h3>
+        <div class="skill-list">
+          <span class="skill-item" ng-repeat="skill in category.skills">{{ skill }}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience" class="animate-element">
+    <h2>Experience & Leadership</h2>
+    <div class="experience animate-element" ng-repeat="exp in experiences">
+      <h3>{{ exp.role }}</h3>
+      <p>{{ exp.description }}</p>
+    </div>
+  </section>
+
+  <section id="contact" class="animate-element">
+    <h2>Contact Information</h2>
+    <div class="contact-info">
+      <div class="contact-item">
+        <div class="contact-icon">
+          <i class="fas fa-envelope"></i>
+        </div>
+        <div>
+          <p>Email</p>
+          <a href="mailto:{{ contact.email }}">{{ contact.email }}</a>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">
+          <i class="fas fa-phone"></i>
+        </div>
+        <div>
+          <p>Phone</p>
+          <a href="tel:{{ contact.phone }}">{{ contact.phone }}</a>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">
+          <i class="fab fa-linkedin"></i>
+        </div>
+        <div>
+          <p>LinkedIn</p>
+          <a href="{{ contact.linkedin }}" target="_blank">Vidushi Bhadauria</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="additional" class="animate-element">
+    <h2>About Me</h2>
+    <p>{{ funFact }}</p>
+    <div class="extra-info">
+      <h3>Soft Skills</h3>
+      <div class="skill-list">
+        <span class="skill-item" ng-repeat="skill in softSkills">{{ skill }}</span>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+  <script>
+    angular.module('portfolioApp', []).controller('MainController', function($scope) {
+      $scope.tagline = "Vidushi Bhadauria";
+      $scope.subtitle = "BCA Student | Developer | Tech Enthusiast";
+      $scope.photo = "IMAGE.jpg";
+      $scope.isDarkMode = false;
+      
+      $scope.eduDetails = {
+        christ: "Received the Excellence in Academics award for the 2024–2025 session, securing 1st rank among all first-year BCA students. Received the highest possible final grade ('O') in 5 out of 8 subjects.",
+        twelth: "Participated in IIS MUN and secured the position of runner-up for Best Speaker.",
+        tenth: "Honored with the title of Middle Level Prefect by the Principal of India International School, Mansarovar."
+      };
+      
+      $scope.projects = [
+        {
+          title: "Bhraman",
+          description: "A comprehensive tour and travel booking website. Enabled seamless navigation, secure transactions, and personalized trip planning to enhance user booking experience.",
+          technologies: "HTML, CSS, JavaScript, SQL",
+          screenshot: "PROJECT1.png",
+          github: "https://github.com/Vidushi1408/Bhraman"
+        },
+        {
+          title: "Ecosphere",
+          description: "Created a dynamic music streaming platform with integrated getID3 for metadata extraction and Composer for dependency management, allowing users to stream and upload original tracks.",
+          technologies: "HTML, CSS, JavaScript, PHP, SQL",
+          screenshot: "PROJECT2.png",
+          github: "https://github.com/Vidushi1408/Ecosphere"
+        },
+        {
+          title: "AI-Driven Retail Analytics System",
+          description: "Real-time system using AI to track customer movement, analyze behavior patterns, forecast product demand, and optimize inventory in retail stores.",
+          technologies: "YOLOv5, OpenCV, FastAPI",
+          screenshot: "PROJECT3.png",
+          github: "https://github.com/Vidushi1408/RetailVision"
+        },
+        {
+          title: "ByteBasket – Java Shopping Cart App",
+          description: "JavaFX-based desktop e-commerce application with MySQL and JDBC integration. Utilized object-oriented principles to design modular classes for various functionalities.",
+          technologies: "Java, JavaFX, MySQL, JDBC",
+          screenshot: "project4.png",
+          github: "https://github.com/Vidushi1408/ByteBasket"
+        }
+      ];
+      
+      $scope.skillCategories = [
+        {
+          name: "Programming Languages",
+          skills: ["C", "C++", "Java", "Python"]
+        },
+        {
+          name: "Web Development",
+          skills: ["HTML", "CSS", "JavaScript", "PHP", "Bootstrap", "Node.js", "AngularJS"]
+        },
+        {
+          name: "Database Management",
+          skills: ["SQL", "MySQL"]
+        },
+        {
+          name: "Data Analysis & Tools",
+          skills: ["Power BI", "Google Sheets", "Excel"]
+        },
+        {
+          name: "Problem-Solving",
+          skills: ["Data Structures & Algorithms", "Competitive Programming"]
+        }
+      ];
+      
+      $scope.softSkills = [
+        "Communication & Teamwork",
+        "Leadership",
+        "Negotiation",
+        "Critical Thinking",
+        "Problem Solving",
+        "Time Management"
+      ];
+      
+      $scope.experiences = [
+        {
+          role: "Documentation Head – Technical Committee, Christ University",
+          description: "Streamlined documentation processes to ensure accuracy and accessibility of student records. Coordinated with various student committees to maintain structured and well-documented event records."
+        },
+        {
+          role: "Tech Committee Member – Christ University",
+          description: "Managed and maintained the technical infrastructure for student welfare events, ensuring seamless execution of digital and audiovisual setups."
+        },
+        {
+          role: "Eulim Science Club Member",
+          description: "Played a key role in planning, organizing, and executing TechGenX and the Science Exhibition, managing logistics, technical setups, and event coordination to ensure a successful and engaging experience for participants."
+        },
+        {
+          role: "Badminton Team Member – Christ University",
+          description: "Active member of the University Badminton team, representing the university in various competitions."
+        }
+      ];
+      
+      $scope.contact = {
+        email: "vidushibhadauria06@gmail.com",
+        phone: "+91 9412442100",
+        linkedin: "http://www.linkedin.com/in/vidushi-bhadauria"
+      };
+      
+      $scope.funFact = "I'm a tech enthusiast who loves music, psychology, and plays for the University Badminton team! Always looking for opportunities to learn and innovate in the tech world.";
+      
+      // Function to toggle dark mode
+      $scope.toggleTheme = function() {
+        $scope.isDarkMode = !$scope.isDarkMode;
+        document.body.classList.toggle('dark-mode');
+        
+        // Update particles color when theme changes
+        initParticles($scope.isDarkMode);
+      };
+      
+      // Initialize animation observer
+      setTimeout(function() {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+            }
+          });
+        }, {threshold: 0.1});
+        
+        document.querySelectorAll('.animate-element').forEach(el => {
+          observer.observe(el);
+        });
+      }, 100);
+    });
+    
+    // Initialize particles.js
+    function initParticles(isDark) {
+      particlesJS('particles-js', {
+        particles: {
+          number: {
+            value: 50,
+            density: {
+              enable: true,
+              value_area: 800
+            }
+          },
+          color: {
+            value: isDark ? '#89c0d0' : '#5c9ead'
+          },
+          shape: {
+            type: 'circle',
+            stroke: {
+              width: 0,
+              color: '#000000'
+            }
+          },
+          opacity: {
+            value: 0.3,
+            random: false,
+            anim: {
+              enable: false
+            }
+          },
+          size: {
+            value: 3,
+            random: true
+          },
+          line_linked: {
+            enable: true,
+            distance: 150,
+            color: isDark ? '#89c0d0' : '#5c9ead',
+            opacity: 0.2,
+            width: 1
+          },
+          move: {
+            enable: true,
+            speed: 2,
+            direction: 'none',
+            random: false,
+            straight: false,
+            out_mode: 'out',
+            bounce: false
+          }
+        },
+        interactivity: {
+          detect_on: 'canvas',
+          events: {
+            onhover: {
+              enable: true,
+              mode: 'grab'
+            },
+            onclick: {
+              enable: true,
+              mode: 'push'
+            },
+            resize: true
+          },
+          modes: {
+            grab: {
+              distance: 140,
+              line_linked: {
+                opacity: 1
+              }
+            },
+            push: {
+              particles_nb: 4
+            }
+          }
+        },
+        retina_detect: true
+      });
+    }
+    
+    // Initialize particles on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      initParticles(false);
+    });
+  </script>
+</body>
+</html>
