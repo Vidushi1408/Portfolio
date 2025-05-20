@@ -409,6 +409,13 @@
     </div>
   </section>
 
+  <section id="soft-skills" class="animate-element">
+    <h2>Soft Skills</h2>
+    <div class="skill-list">
+      <span class="skill-item" ng-repeat="skill in softSkills">{{ skill }}</span>
+    </div>
+  </section>
+
   <section id="experience" class="animate-element">
     <h2>Experience & Leadership</h2>
     <div class="experience animate-element" ng-repeat="exp in experiences">
@@ -453,12 +460,6 @@
   <section id="additional" class="animate-element">
     <h2>About Me</h2>
     <p>{{ funFact }}</p>
-    <div class="extra-info">
-      <h3>Soft Skills</h3>
-      <div class="skill-list">
-        <span class="skill-item" ng-repeat="skill in softSkills">{{ skill }}</span>
-      </div>
-    </div>
   </section>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
